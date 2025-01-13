@@ -86,34 +86,6 @@ const fields = [
           }
         }"
 
-        :actions="{
-         label: '&nbsp;',
-         type: 'dropdown-horizontal',
-         icon: 'bi bi-three-dots',
-         actions:[
-                  {
-                      label: 'View',
-                      icon: 'bi bi-eye',
-                      path: '/billing/features/{id}'
-                  },
-                  {
-                      label: 'Edit',
-                      icon: 'bi bi-pencil-square',
-                      permission: 'billing.features.add',
-                      emits: editBillingFeature,
-                  },
-                  {
-                      label: 'Delete',
-                      icon: 'bi bi-trash',
-                      class:'',
-                      permission: 'billing.features.delete',
-                      emits: deleteBillingFeature,
-                  },
-
-          ]
-
-      }"
-
       >
       </sh-table>
     </div>
