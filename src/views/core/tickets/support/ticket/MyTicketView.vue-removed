@@ -1,0 +1,137 @@
+<script setup>
+import {useStreamline} from '@iankibetsh/vue-streamline'
+import { computed, onMounted, ref, useId, watch } from 'vue'
+import { ShTabs, ShModalForm, ShConfirmAction, shRepo, useAppStore, ShTable } from '@iankibetsh/shframework'
+import { useRoute, useRouter } from 'vue-router'
+import CheckBox from '@/components/form-components/CheckBox.vue'
+import SkeletonFull from '@/views/layouts/skeletons/SkeletonFull.vue'
+import { formatDate } from '@/utils/helpers.js'
+import getSupportDistance from '@/utils/getSupportDistance.js'
+
+const route = useRoute();
+const ticketId = route.params.id;
+const {getActionUrl, service: ticketService, loading} = useStreamline('tickets',ticketId )
+const {getActionUrl:ticketActionUrl, service: tickService} = useStreamline('ticket')
+
+const {getActionUrl:usersGetActionUrl, service: userService} = useStreamline('users')
+const {getActionUrl:myTicketsGetActionUrl, service: myService} = useStreamline('myTickets')
+
+const props = defineProps(['ticket'])
+const ticket = props.assign.ticket
+
+const appStore = useAppStore();
+const counts = ref(null)
+const client = ref(null)
+const router = useRouter()
+const getCounts = () => {
+  ticketService.getCounts(ticketId).then((res) => {
+    counts.value = res
+  })
+}
+watch(
+  () => ticketService.ticket,
+  (newTicket) => {
+    if (newTicket) {
+      ticket.value = newTicket;
+    }
+  }
+);
+const taskAdded = (res) => {
+  console.log(res)
+}
+
+const deleteSuccess = (res) => {
+  shRepo.showToast('Ticket deleted successfully', 'success')
+  appStore.refresh(1000)
+  router.push('/tickets')
+}
+
+const ticketAssigned = (res) => {
+  shRepo.showToast('Ticket assigned successfully', 'success');
+  appStore.refresh(2000)
+}
+
+const logs = ref(null)
+
+const getTicketLogs = () => {
+  ticketService.getTicketLogs(ticketId).then((res) => {
+    logs.value = res.data
+  })
+}
+
+onMounted(() => {
+  getCounts()
+  getTicketLogs()
+})
+
+
+
+</script>
+
+<template>
+  <div class="pagetitle">
+
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><router-link to="/">Home</router-link></li>
+        <li class="breadcrumb-item"><router-link to="/my-tickets">My Tickets</router-link></li>
+        <li class="breadcrumb-item"><router-link to="#" class="active">Ticket #{{ ticketId }}</router-link></li>
+      </ol>
+    </nav>
+  </div>
+  <div  v-if="!loading && ticketService.ticket" >
+
+    <div class="actions d-flex align-items-center gap-2 pb-2">
+      <button class="btn  btn-success flex-fill bi-play-circle-fill" v-if="ticket.assignment.status === 'assigned'" @click="startWorking(assign)"> Start Working  </button>
+      <sh-confirm-action  v-if-user-can="'tickets.close'" @success="deleteSuccess" :url="ticketActionUrl('deleteTicket', ticketId)" method="post" title="Close Ticket" message="This action cannot be undone. Are you sure you want to delete this ticket?">
+        <button class="btn btn-sm btn-danger text-white"><i class="bi bi-trash"></i> Close Ticket</button>
+      </sh-confirm-action>
+      <sh-confirm-action  v-if-user-can="'tickets.close'" @success="deleteSuccess" :url="ticketActionUrl('deleteTicket', ticketId)" method="post" title="Escalate Ticket" message="This action cannot be undone. Are you sure you want to delete this ticket?">
+        <button class="btn btn-sm btn-danger text-white"><i class="bi bi-trash"></i>  Escalate  Ticket</button>
+      </sh-confirm-action>
+      <sh-confirm-action  v-if-user-can="'tickets.close'" @success="deleteSuccess" :url="ticketActionUrl('deleteTicket', ticketId)" method="post" title="Postone Ticket" message="This action cannot be undone. Are you sure you want to delete this ticket?">
+        <button class="btn btn-sm btn-danger text-white"><i class="bi bi-trash"></i>  Postpone  Ticket</button>
+      </sh-confirm-action>
+
+    </div>
+    <div :class="{'opacity-50': ticketService.ticket.status === 'cancelled'}">
+
+      <div class="row">
+        <div class="col-md-7">
+          <sh-tabs
+            :tabs="['details','assignments','items','notes', 'client' ]"
+            :shared-data="ticketService.ticket"
+            :base-url="`/tickets/view/${ticketId}`"
+            :tab-counts="{'assignments': counts?.assignments, 'items': counts?.items, 'notes': counts?.notes}"
+          />
+        </div>
+        <div class="col-md-5 mt-4">
+          <div class="card border-0 mt-3">
+            <div class="card-body">
+              <h5 class=""> Conversations & Logs </h5>
+              <sh-table :end-point="getActionUrl('getTicketLogs', ticketId)">
+                <template v-slot:records="slotProps">
+                  <ul>
+                    <li v-for="log in slotProps.records"  :key="log.id">
+                      <small class="text-muted small text-start">  {{ formatDate(log.created_at)}}</small>
+                      <span> -  {{ log.log}}</span>
+                      <small class="text-end"> : <router-link :to="`/users/view/${log.user_id}`"> {{ log.user.name}}</router-link></small>
+                    </li>
+                  </ul>
+                </template>
+              </sh-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <SkeletonFull v-else></SkeletonFull>
+
+</template>
+
+<style scoped>
+.opacity-50{
+  //pointer-events: none;
+}
+</style>
