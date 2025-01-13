@@ -18,7 +18,13 @@ menus = menus.concat( [
       {
         path: '/billing/plans',
         label: 'Plans',
-        permission: 'plans.read',
+        permission: 'plans',
+        type:'single',
+      },
+      {
+        path: '/billing/features',
+        label: 'Billing Features',
+        permission: 'features',
         type:'single',
       }
     ]

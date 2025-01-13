@@ -1,32 +1,30 @@
 <script setup>
 import { ref, useId } from 'vue'
-import { ShConfirmAction, ShModalForm, shRepo, ShTable, useAppStore, useUserStore } from '@iankibetsh/shframework'
+import { ShModalForm, shRepo, ShTable, useAppStore, useUserStore } from '@iankibetsh/shframework'
 import { useStreamline } from '@iankibetsh/vue-streamline'
-import { formatAnyDate, formatDate, formatStatus } from '@/utils/helpers.js'
-import CheckBox from '@/components/form-components/CheckBox.vue'
 import { storeToRefs } from 'pinia'
 
-const {getActionUrl} = useStreamline('billing/plans')
-const plan = ref(null)
-const storePlanModalId = useId();
+const {getActionUrl} = useStreamline('billing/features')
+const billingFeature = ref(null)
+const storeFeatureModalId = useId();
 const appStore = useAppStore()
 const userStore = useUserStore()
 const {user} = storeToRefs(userStore)
 
-const planStored = (res) => {
+const billingFeatureStored = (res) => {
   shRepo.showToast(res.message, 'success', );
   appStore.refresh(2000)
 }
-const deletePlan = plan => {
-  shRepo.runPlainRequest(getActionUrl('deletePlan', plan.id)).then((res) => {
-    shRepo.showToast('Plan deleted successfully', 'success')
+const deleteBillingFeature = billingFeature => {
+  shRepo.runPlainRequest(getActionUrl('deleteBillingFeature', billingFeature.id)).then((res) => {
+    shRepo.showToast('Feature deleted successfully', 'success')
     appStore.refresh(2000)
   })
 }
-const editPlan = (row) => {
-  plan.value = row
-  if (plan.value) {
-    shRepo.showModal(storePlanModalId)
+const editBillingFeature = (row) => {
+  billingFeature.value = row
+  if (billingFeature.value) {
+    shRepo.showModal(storeFeatureModalId)
   }
 }
 
@@ -37,20 +35,14 @@ const fields = [
     required: true
   },
   {
-    name: 'plan_type',
+    name: 'feature_type',
     type:'select',
-    label: 'Plan Type',
+    label: 'Feature Type',
     required: 'true',
     options: [
-      {label: 'Public', value: 'public'},
-      {label: 'Private', value: 'private'}
-      ]
-  },
-  {
-    label: 'Is Popular',
-    type: 'checkbox',
-    component: CheckBox,
-    name: 'is_popular',
+      {label: 'Boolean', value: 'boolean'},
+      {label: 'Text', value: 'text'}
+    ]
   },
   {
     name: 'amount',
@@ -70,39 +62,33 @@ const fields = [
 <template>
   <main>
     <sh-modal-form
-      :modal-id="storePlanModalId"
-      modal-title="Plans  Form "
+      :modal-id="storeFeatureModalId"
+      modal-title="Features  Form "
       :fields="fields"
-      :current-data="plan"
-      :action="getActionUrl('storePlan')"
-      :successCallback="planStored"
+      :current-data="billingFeature"
+      :action="getActionUrl('storeFeature')"
+      :successCallback="billingFeatureStored"
       class="btn btn-primary btn-sm mb-2"
     >
       <i class="bi bi-plus-circle"></i>
-      ADD PLANS
+      ADD FEATURE
     </sh-modal-form>
     <div class="table-responsive ">
       <sh-table
         :disable-mobile-responsive="true"
         pagination-style="loadMore"
         :hide-search="true"
-        :end-point="getActionUrl('listPlans')"
+        :end-point="getActionUrl('listFeatures')"
         :headers="[
         'id',
         'name',
-        'plan_type',
         'amount',
-        {
-          label: 'Is Popular',
-          key: 'is_popular',
-          callback:(row)=>row.is_popular ? 'Yes' : 'No'
-        },
+        'feature_type',
         'description',
-
       ]"
         :links="{
         name: {
-          url: '/billing/plans/{id}',
+          url: '/billing/features/{id}',
           }
         }"
 
@@ -114,20 +100,20 @@ const fields = [
                   {
                       label: 'View',
                       icon: 'bi bi-eye',
-                      path: '/billing/plans/{id}'
+                      path: '/billing/features/{id}'
                   },
                   {
                       label: 'Edit',
                       icon: 'bi bi-pencil-square',
-                      permission: 'billing.plans.add',
-                      emits: editPlan,
+                      permission: 'billing.features.add',
+                      emits: editBillingFeature,
                   },
                   {
                       label: 'Delete',
                       icon: 'bi bi-trash',
                       class:'',
-                      permission: 'billing.plans.delete',
-                      emits: deletePlan,
+                      permission: 'billing.features.delete',
+                      emits: deleteBillingFeature,
                   },
 
           ]

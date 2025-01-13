@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AdminDash from '../views/core/AdminDash.vue'
 import LoginView from '@/views/auth/LoginView.vue'
 import DashboardView from '@/views/core/DashboardView.vue'
-import ListProductsCategory from '@/views/core/inventory/products-category/ListProductsCategory.vue'
 import BillingMain from '@/views/core/billing/BillingMain.vue'
 import ListPlans from '@/views/core/billing/plans/ListPlans.vue'
+import ListBillingFeatures from '@/views/core/billing/ListBillingFeatures.vue'
 
 let routes = []
 routes = routes.concat(
@@ -25,6 +24,10 @@ routes = routes.concat(
           path:'plans',
           component: ListPlans,
         },
+        {
+          path:'features',
+          component: ListBillingFeatures
+        }
 
       ]
     },
