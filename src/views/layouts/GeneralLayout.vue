@@ -31,11 +31,11 @@ const menuCounts = ref(null)
 onMounted(() => {
   menus.value = admin
   console.log('menus are', menus.value)
-  menuForSupport.value = supportMenus
-  homeService.menuCounts().then((res) => {
-    menuCounts.value = res
-    appStore.setItem('menuCounts', res)
-  })
+  // menuForSupport.value = supportMenus
+  // homeService.menuCounts().then((res) => {
+  //   menuCounts.value = res
+  //   appStore.setItem('menuCounts', res)
+  // })
 
   currentTheme.value = localStorage.getItem('theme') || detectBrowserTheme;
   document.documentElement.setAttribute('data-bs-theme', currentTheme.value);

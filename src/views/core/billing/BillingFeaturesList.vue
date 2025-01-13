@@ -4,7 +4,7 @@ import { ShModalForm, shRepo, ShTable, useAppStore, useUserStore } from '@iankib
 import { useStreamline } from '@iankibetsh/vue-streamline'
 import { storeToRefs } from 'pinia'
 
-const {getActionUrl} = useStreamline('billing/features')
+const {getActionUrl} = useStreamline('billing/features/features')
 const billingFeature = ref(null)
 const storeFeatureModalId = useId();
 const appStore = useAppStore()
@@ -43,12 +43,6 @@ const fields = [
       {label: 'Boolean', value: 'boolean'},
       {label: 'Text', value: 'text'}
     ]
-  },
-  {
-    name: 'amount',
-    label: 'Amount',
-    required: true,
-    type: 'number',
   },
   {
     name: 'description',

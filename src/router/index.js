@@ -3,7 +3,10 @@ import LoginView from '@/views/auth/LoginView.vue'
 import DashboardView from '@/views/core/DashboardView.vue'
 import BillingMain from '@/views/core/billing/BillingMain.vue'
 import ListPlans from '@/views/core/billing/plans/ListPlans.vue'
-import ListBillingFeatures from '@/views/core/billing/ListBillingFeatures.vue'
+import BillingFeaturesList from '@/views/core/billing/BillingFeaturesList.vue'
+import PlanView from '@/views/core/billing/plans/plan/PlanView.vue'
+import PlanFeaturesList from '@/views/core/billing/plans/plan/tabs/PlanFeaturesList.vue'
+import PlanOverview from '@/views/core/billing/plans/plan/tabs/PlanOverview.vue'
 
 let routes = []
 routes = routes.concat(
@@ -26,11 +29,28 @@ routes = routes.concat(
         },
         {
           path:'features',
-          component: ListBillingFeatures
-        }
+          component: BillingFeaturesList
+        },
+        {
+          path:'plans/plan/:id',
+          component:  PlanView,
+          children: [
+            {
+              path:'tab/overview',
+              component:  PlanOverview,
+            },{
+              path:'tab/features',
+              component:  PlanFeaturesList,
+            }
+          ]
+        },
+
+
+
 
       ]
     },
+
     {
       path: '/login',
        component: LoginView

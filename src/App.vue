@@ -63,7 +63,6 @@ onMounted(() => {
   <template v-else-if="route.path.includes('sh-')">
     <general-layout>
       <template #body>
-
         <router-view />
       </template>
     </general-layout>

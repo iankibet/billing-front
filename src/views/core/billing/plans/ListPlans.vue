@@ -1,26 +1,21 @@
 <script setup>
 import { ref, useId } from 'vue'
-import { ShConfirmAction, ShModalForm, shRepo, ShTable, useAppStore, useUserStore } from '@iankibetsh/shframework'
+import { ShModalForm, shRepo, ShTable, useAppStore } from '@iankibetsh/shframework'
 import { useStreamline } from '@iankibetsh/vue-streamline'
-import { formatAnyDate, formatDate, formatStatus } from '@/utils/helpers.js'
 import CheckBox from '@/components/form-components/CheckBox.vue'
-import { storeToRefs } from 'pinia'
 
-const {getActionUrl} = useStreamline('billing/plans')
+const {getActionUrl} = useStreamline('billing/plans/plans')
 const plan = ref(null)
 const storePlanModalId = useId();
-const appStore = useAppStore()
-const userStore = useUserStore()
-const {user} = storeToRefs(userStore)
 
 const planStored = (res) => {
   shRepo.showToast(res.message, 'success', );
-  appStore.refresh(2000)
+  useAppStore().refresh(2000)
 }
 const deletePlan = plan => {
   shRepo.runPlainRequest(getActionUrl('deletePlan', plan.id)).then((res) => {
     shRepo.showToast('Plan deleted successfully', 'success')
-    appStore.refresh(2000)
+    useAppStore().refresh(2000)
   })
 }
 const editPlan = (row) => {
@@ -102,7 +97,7 @@ const fields = [
       ]"
         :links="{
         name: {
-          url: '/billing/plans/{id}',
+          url: '/billing/plans/plan/{id}',
           }
         }"
 
@@ -114,7 +109,7 @@ const fields = [
                   {
                       label: 'View',
                       icon: 'bi bi-eye',
-                      path: '/billing/plans/{id}'
+                      path: '/billing/plans/view/{id}'
                   },
                   {
                       label: 'Edit',
