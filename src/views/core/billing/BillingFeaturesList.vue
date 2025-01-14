@@ -103,7 +103,6 @@ const fields = [
             }
           ]
         }"
-
       >
       </sh-table>
     </div>
