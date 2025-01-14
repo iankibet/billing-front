@@ -11,7 +11,7 @@ menus = menus.concat( [
   {
     path: '/billing',
     label: 'Billing',
-    icon: 'bi-people',
+    icon: 'bi-wallet2',
     permission: 'billing',
     type: 'many',
     children: [

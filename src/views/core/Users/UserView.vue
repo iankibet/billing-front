@@ -17,7 +17,7 @@ const user = ref(null)
 
     <div class="mt-3">
       <sh-tabs
-        :tabs="['details','accounts', 'location', 'gmaps' ]"
+        :tabs="['details' ]"
         :shared-data="usersService.user"
         :base-url="`/users/view/${usersService.user.id}`"
       />

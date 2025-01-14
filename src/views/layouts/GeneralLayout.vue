@@ -4,12 +4,10 @@ import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import {useStreamline} from '@iankibetsh/vue-streamline'
 import admin from '@/app/menus/admin.js'
-import supportMenus from '@/app/menus/support.js'
 import { useUserStore, shRepo, useAppStore } from '@iankibetsh/shframework'
 import BreadCrumbs from '@/views/layouts/BreadCrumbs.vue'
 
 const { getActionUrl, service } = useStreamline('users')
-const {  service:homeService, loading } = useStreamline('home')
 const theme = ref('');
 
 const userStore = useUserStore()
@@ -88,7 +86,7 @@ const unreadCount = ref('-')
    <header id="header" class="header fixed-top d-flex align-items-center" v-if="user">
      <div class="d-flex align-items-center justify-content-between">
        <router-link to="/" class="logo d-flex align-items-center">
-         <img src="@/assets/images/pamoja-white.png" alt="" />
+        <h4 class="text-primary">DASHBOARD</h4>
        </router-link>
        <i class="bi bi-list toggle-sidebar-btn" @click="toggleSidebar"></i>
      </div>
@@ -162,7 +160,7 @@ const unreadCount = ref('-')
    <!-- ======= Sidebar ======= -->
    <aside id="sidebar" class="sidebar">
      <ul class="sidebar-nav" id="sidebar-nav" >
-       <template v-for="menu in menus" :key="menu.permission" v-if="user.department_id===1">
+       <template v-for="menu in menus" :key="menu.permission" >
          <li
            class="nav-item"
            v-if="user.isAllowedTo(menu.permission) && menu.type === 'single'"
@@ -208,20 +206,7 @@ const unreadCount = ref('-')
            </ul>
          </li>
        </template>
-       <template v-for="menu in menuForSupport" :key="menu.permission" v-if="user.department_id===2">
-         <li
-           class="nav-item"
-           v-if="menu.type === 'single'"
-         >
-           <router-link class="nav-link collapsed" :to="menu.path">
-             <i :class="menu.icon"></i>
-             <span class="d-flex justify-content-between gap-3  w-100 align-items-center">
-               <span>{{ menu.label }}</span>
-               <small class="menu_count small bg-primary-subtle rounded-1 py-0 px-1 me-2"  v-if="menuCounts && Object.keys(menuCounts).includes(menu.permission) && menuCounts[menu.permission] > 0"> {{ menuCounts[menu.permission]}}  </small>
-             </span>
-           </router-link>
-         </li>
-       </template>
+
      </ul>
    </aside>
    <!-- End Sidebar-->

@@ -1,9 +1,7 @@
 <script setup>
-import TheWelcome from '../../components/TheWelcome.vue'
 import { formatDate } from '@/utils/helpers.js'
 import { ShTable } from '@iankibetsh/shframework'
 import { useStreamline } from '@iankibetsh/vue-streamline'
-import ListHomeTickets from '@/views/core/home/ListHomeTickets.vue'
 import { onMounted, ref } from 'vue'
 
 const homeData = ref([])
@@ -15,7 +13,7 @@ const fetchTicketCounts  = () => {
 }
 
 onMounted(() => {
-  fetchTicketCounts()
+  // fetchTicketCounts()
 })
 
 

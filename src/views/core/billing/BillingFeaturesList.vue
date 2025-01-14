@@ -4,7 +4,7 @@ import { ShModalForm, shRepo, ShTable, useAppStore, useUserStore } from '@iankib
 import { useStreamline } from '@iankibetsh/vue-streamline'
 import { storeToRefs } from 'pinia'
 
-const {getActionUrl} = useStreamline('billing/features/features')
+const {getActionUrl, service} = useStreamline('billing/features/features')
 const billingFeature = ref(null)
 const storeFeatureModalId = useId();
 const appStore = useAppStore()
@@ -16,9 +16,13 @@ const billingFeatureStored = (res) => {
   appStore.refresh(2000)
 }
 const deleteBillingFeature = billingFeature => {
-  shRepo.runPlainRequest(getActionUrl('deleteBillingFeature', billingFeature.id)).then((res) => {
-    shRepo.showToast('Feature deleted successfully', 'success')
-    appStore.refresh(2000)
+  shRepo.confirmAction('Do you want to delete this feature?').then(res =>{
+    if(res.isConfirmed){
+      service.deleteFeature(billingFeature.id).then((res) => {
+        shRepo.showToast('Feature deleted successfully', 'success')
+        appStore.refresh(2000)
+      })
+    }
   })
 }
 const editBillingFeature = (row) => {
@@ -80,10 +84,24 @@ const fields = [
         'feature_type',
         'description',
       ]"
-        :links="{
-        name: {
-          url: '/billing/features/{id}',
-          }
+        :actions="{
+          label:'&nbsp',
+          icon: 'bi bi-three-dots',
+          type:'dropdown-horizontal',
+          actions: [
+            {
+              label: 'Edit',
+              icon: 'bi bi-pencil-square',
+              permission: 'billing.features.add',
+              emits: editBillingFeature
+            },
+            {
+              label:'Delete',
+              icon: 'bi bi-trash',
+              permission: 'billing.features.delete',
+              emits: deleteBillingFeature
+            }
+          ]
         }"
 
       >
