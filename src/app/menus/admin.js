@@ -16,6 +16,12 @@ menus = menus.concat( [
     type: 'many',
     children: [
       {
+        path: '/billing/bills',
+        label: 'Bills',
+        permission: 'bills',
+        type:'single',
+      },
+      {
         path: '/billing/plans',
         label: 'Plans',
         permission: 'plans',
@@ -26,8 +32,21 @@ menus = menus.concat( [
         label: 'Billing Features',
         permission: 'features',
         type:'single',
+      },
+      {
+        path: '/billing/payment-methods',
+        label: 'Payment Methods',
+        permission: 'payment_methods',
+        type:'single',
       }
     ]
+  },
+  {
+    path: '/clients-billing',
+    label: 'Billing 2',
+    icon:'bi-list',
+    permission: 'billing',
+    type:'single'
   },
   {
     path: '/sh-departments',

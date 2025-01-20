@@ -10,12 +10,12 @@ const {getActionUrl,service} = useStreamline('billing/plans/plan-features')
 
 <template>
   <router-link class="btn btn-primary float-end" :to="`?popup=offcanvas&side=end&component=AddPlanFeatures&id=${plan.id}&title=Add Features`"><i class="bi-plus"/> Add Feature</router-link>
-    <sh-table :headers="['created_at','name','description',{
+    <sh-table :headers="['created_at','name',{
       label: 'Value',
       callBack: row=>{
         return row.feature_type === 'boolean' ? `<span class='badge bg-success text-white'><i class='bi-check'/> Included</span>`:row.value
       }
-    }]" :end-point="getActionUrl('listPlanFeatures',plan.id)"
+    },'description']" :end-point="getActionUrl('listPlanFeatures',plan.id)"
     :actions="{
       label:'&nbsp',
       actions: [

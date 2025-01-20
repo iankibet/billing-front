@@ -3,6 +3,7 @@ import { ref, useId } from 'vue'
 import { ShModalForm, shRepo, ShTable, useAppStore, useUserStore } from '@iankibetsh/shframework'
 import { useStreamline } from '@iankibetsh/vue-streamline'
 import { storeToRefs } from 'pinia'
+import CardLayout from '@/views/layouts/CardLayout.vue'
 
 const {getActionUrl, service} = useStreamline('billing/features/features')
 const billingFeature = ref(null)
@@ -39,6 +40,12 @@ const fields = [
     required: true
   },
   {
+    name:'feature_category_id',
+    label: 'Feature Category',
+    type: 'select',
+    url: getActionUrl('listFeatureCategories'),
+  },
+  {
     name: 'feature_type',
     type:'select',
     label: 'Feature Type',
@@ -58,7 +65,7 @@ const fields = [
 </script>
 
 <template>
-  <main>
+  <CardLayout class="">
     <sh-modal-form
       :modal-id="storeFeatureModalId"
       modal-title="Features  Form "
@@ -82,6 +89,7 @@ const fields = [
         'name',
         'amount',
         'feature_type',
+        'category',
         'description',
       ]"
         :actions="{
@@ -106,7 +114,7 @@ const fields = [
       >
       </sh-table>
     </div>
-  </main>
+  </CardLayout>
 
 </template>
 
