@@ -8,9 +8,15 @@ import PlanView from '@/views/core/billing/plans/plan/PlanView.vue'
 import PlanFeaturesList from '@/views/core/billing/plans/plan/tabs/PlanFeaturesList.vue'
 import PlanOverview from '@/views/core/billing/plans/plan/tabs/PlanOverview.vue'
 import FeaturesList from '@/views/core/billing/plans/features/FeaturesList.vue'
-import ClientPlansList from '@/views/core/clients-billing/ClientPlansList.vue'
+import AvailablePlansList from '@/views/core/clients-billing/AvailablePlansList.vue'
 import PaymentMethodsList from '@/views/core/billing/paymentMethods/PaymentMethodsList.vue'
 import BillsMain from '@/views/core/billing/bills/BillsMain.vue'
+import BillsList from '@/views/core/billing/bills/tabs/BillsList.vue'
+import BillCheckout from '@/views/core/clients-billing/BillCheckout.vue'
+import PlanBillsList from '@/views/core/clients-billing/plan/tabs/PlanBillsList.vue'
+import PlanMain from '@/views/core/clients-billing/plan/PlanMain.vue'
+import UserPlan from '@/views/core/clients-billing/plan/tabs/UserPlan.vue'
+import PaymentDetails from '@/views/core/clients-billing/plan/tabs/PaymentDetails.vue'
 
 let routes = []
 routes = routes.concat(
@@ -29,7 +35,13 @@ routes = routes.concat(
       children:[
         {
           path:'bills',
-          component: BillsMain
+          component: BillsMain,
+          children: [
+            {
+              path:'tab/:status',
+              component: BillsList
+            }
+          ]
         },
         {
           path:'plans',
@@ -60,8 +72,31 @@ routes = routes.concat(
       ]
     },
     {
-      path:'/clients-billing',
-      component: ClientPlansList
+      path:'/available-plans',
+      component: AvailablePlansList
+    },
+    {
+      path:'/my-plan',
+      component: PlanMain,
+      children: [
+        {
+          path: 'tab/plan',
+          component: UserPlan
+        },
+        {
+          path: 'tab/bills',
+          component: PlanBillsList
+        },
+        {
+          path:'tab/payment_details',
+          component: PaymentDetails
+        }
+
+      ]
+    },
+    {
+      path:'/checkout/:id',
+      component: BillCheckout
     },
 
     {

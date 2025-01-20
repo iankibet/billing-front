@@ -17,6 +17,7 @@ import { ShFrontend } from '@iankibetsh/shframework'
 import App from './App.vue'
 import router from './router'
 import AddPlanFeatures from '@/views/core/billing/plans/plan/AddPlanFeatures.vue'
+import PaymentReceipt from '@/views/core/clients-billing/plan/PaymentReceipt.vue'
 
 const app = createApp(App)
 app.use(createPinia())
@@ -68,4 +69,5 @@ app.use(streamline, {
 })
 
 app.component('AddPlanFeatures',AddPlanFeatures)
+app.component('PaymentReceipt',PaymentReceipt)
 app.mount('#app')

@@ -17,6 +17,11 @@ const createUserPlan = (planId) => {
   shRepo.confirmAction('Do you want to select this plan?').then(res =>{
     if(res.isConfirmed){
       service.createUserPlan(planId).then((res) => {
+        if(res.status == 'info'){
+          shRepo.showToast(res.message, 'info')
+          router.push('/my-plan')
+          return
+        }
         shRepo.showToast('Plan selected successfully', 'success')
         router.push('/checkout/'+ res.data.id)
       })
@@ -28,13 +33,13 @@ const createUserPlan = (planId) => {
 <template>
 
  <SkeletonFull v-if="loading && !plans" />
- <div class="container" v-else>
+ <div class="" v-else>
    <div class="row">
-       <div class="col-md-4">
-         <div class="card"  v-for="plan in plans" :key="plan.key">
+       <div class="col-md-4 " v-for="plan in plans" :key="plan.key">
+         <div class="card h-100">
            <div class="card-body" >
-            <div class="text-center mb-3">
-              <span v-if="plan.is_popular" class="badge badge-success">POPULAR</span>
+            <div class="text-center">
+              <span v-if="plan.is_popular" class=" badge bg-success ">Popular</span>
               <p class="card-title fw-bold">{{ plan.name }}</p>
 <!--              <p class="card-text">{{ plan.description }}</p>-->
               <h5 class="card-text">{{ plan.amount }}/month</h5>

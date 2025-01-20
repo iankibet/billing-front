@@ -18,7 +18,7 @@ const editPaymentMethod = (row) => {
 
 <template>
   <sh-modal-form
-    class="btn btn-primary"
+    class="btn btn-primary btn-sm"
     modal-title="Payment Method Form"
     :current-data="paymentMethod"
     :modal-id="methodModalId"

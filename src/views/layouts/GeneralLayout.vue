@@ -20,7 +20,6 @@ const appStore = useAppStore()
 const currentTheme = ref(localStorage.getItem('theme') || 'light');
 const detectBrowserTheme = () => {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  console.log('prefers ',prefersDark)
   return prefersDark ? 'dark' : 'light';
 };
 
@@ -28,7 +27,6 @@ const menuCounts = ref(null)
 
 onMounted(() => {
   menus.value = admin
-  console.log('menus are', menus.value)
   // menuForSupport.value = supportMenus
   // homeService.menuCounts().then((res) => {
   //   menuCounts.value = res

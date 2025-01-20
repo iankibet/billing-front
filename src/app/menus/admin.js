@@ -42,8 +42,15 @@ menus = menus.concat( [
     ]
   },
   {
-    path: '/clients-billing',
-    label: 'Billing 2',
+    path: '/available-plans',
+    label: 'Available Plans',
+    icon:'bi-list',
+    permission: 'billing',
+    type:'single'
+  },
+  {
+    path: '/my-plan',
+    label: 'My Plan',
     icon:'bi-list',
     permission: 'billing',
     type:'single'
