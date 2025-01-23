@@ -10,8 +10,8 @@ const {getActionUrl, loading} = useStreamline('billing/payments/payments')
   <SkeletonFull v-if="loading" />
   <div class="table-responsive" v-else>
     <sh-table
-      :end-point="getActionUrl('listPayments', 'paid')"
-      :headers="['id','client','plan','months','amount','paid_amount','discount_applied', 'method','paid_at']"
+      :end-point="getActionUrl('listPayments', 'all')"
+      :headers="['id','client','plan','months','amount','paid_amount','discount_applied','status', 'method','paid_at']"
       />
   </div>
 
