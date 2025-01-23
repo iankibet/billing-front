@@ -54,6 +54,22 @@ const fields = [
     type: 'number',
   },
   {
+    name: 'annual_discount',
+    label: 'Annual Discount',
+    type: 'number',
+  },
+  {
+    name:'annual_discount_type',
+    label: 'Annual Discount Type',
+    type: 'select',
+    options: [
+      {label: 'Percentage', value: 'percentage'},
+      {label: 'Amount', value: 'amount'}
+    ]
+
+  },
+
+  {
     name: 'description',
     label: 'Description',
     type: 'textarea',
@@ -68,7 +84,7 @@ const fields = [
       :modal-id="storePlanModalId"
       modal-title="Plans  Form "
       :fields="fields"
-      :current-data="plan"
+      :current-data="plan? plan : {annual_discount_type: 'percentage'}"
       :action="getActionUrl('storePlan')"
       :successCallback="planStored"
       class="btn btn-primary btn-sm mb-2"

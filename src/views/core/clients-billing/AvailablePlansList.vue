@@ -14,18 +14,14 @@ watch(()=>props.plans, ()=>{
 })
 
 const createUserPlan = (planId) => {
-  shRepo.confirmAction('Do you want to select this plan?').then(res =>{
-    if(res.isConfirmed){
-      service.createUserPlan(planId).then((res) => {
-        if(res.status == 'info'){
-          shRepo.showToast(res.message, 'info')
-          router.push('/my-plan')
-          return
-        }
-        shRepo.showToast('Plan selected successfully', 'success')
-        router.push('/checkout/'+ res.data.id)
-      })
+  service.createUserPlan(planId).then((res) => {
+    if(res.status == 'info'){
+      // shRepo.showToast(res.message, 'info')
+      router.push('/my-plan')
+      return
     }
+    shRepo.showToast('Plan selected successfully', 'success')
+    router.push('/checkout/'+ res.data.id)
   })
 }
 </script>
@@ -43,6 +39,9 @@ const createUserPlan = (planId) => {
               <p class="card-title fw-bold">{{ plan.name }}</p>
 <!--              <p class="card-text">{{ plan.description }}</p>-->
               <h5 class="card-text">{{ plan.amount }}/month</h5>
+              <p v-if="plan.annual_discount > 0" class="mb-1 text-warning">
+                <i class="bi-tags"></i> Annual Discount {{ plan.annual_discount}}<span v-if="plan.annual_discount_type=='percentage'">%</span>
+              </p>
               <button class="btn btn-sm btn-primary" @click="createUserPlan(plan.id)"> Get Started</button>
             </div>
              <hr>

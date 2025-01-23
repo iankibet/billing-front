@@ -31,7 +31,7 @@ onMounted(() => {
   }
 
 
-  document.title = appData.value.title ?? 'Pamoja ISP';
+  document.title = appData.value.title ?? 'Billing Front';
 
   window.shAxionInstance.interceptors.response.use(
     (response) => {

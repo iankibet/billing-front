@@ -21,7 +21,7 @@ const userPlan = myProps.sharedData.userPlan
     <div v-if="userPlan.plan">
       <div class="table-responsive">
         <sh-table :end-point="getActionUrl('listBills', userPlan.id )"
-                  :headers="['id','bill_id','amount','status','created_at']"
+                  :headers="['id','months','amount','amount_after_discount','discount_applied','status','created_at']"
                   :actions="{
                 label:'&nbsp;',
                 actions:[
@@ -30,7 +30,7 @@ const userPlan = myProps.sharedData.userPlan
                     icon:'bi-wallet',
                     class:'btn btn-sm btn-success me-1',
                     url:'/checkout/{id}',
-                    validator: (row) => row.status === 'unpaid'
+                    validator: (row) => row.status === 'unpaid' || row.status === 'pending'
                   },
 
                   {
@@ -38,6 +38,7 @@ const userPlan = myProps.sharedData.userPlan
                     icon:'bi-receipt',
                     class:'btn btn-sm btn-dark',
                     link:'?popup=offcanvas&side=end&component=PaymentReceipt&id={id}&title=Payment Receipt',
+                    validator: (row) => row.status === 'paid'
                   }
                 ]
               }"

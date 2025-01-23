@@ -42,13 +42,6 @@ menus = menus.concat( [
     ]
   },
   {
-    path: '/available-plans',
-    label: 'Available Plans',
-    icon:'bi-list',
-    permission: 'billing',
-    type:'single'
-  },
-  {
     path: '/my-plan',
     label: 'My Plan',
     icon:'bi-list',

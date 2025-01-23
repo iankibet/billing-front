@@ -50,6 +50,9 @@ onMounted(()=>{
         :tab-counts="tabCounts"
       />
     </div>
+    <div class="alert alert-info">
+      No bills found
+    </div>
   </div>
 </template>
 

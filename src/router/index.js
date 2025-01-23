@@ -80,6 +80,10 @@ routes = routes.concat(
       component: PlanMain,
       children: [
         {
+          path: 'change',
+          component: AvailablePlansList
+        },
+        {
           path: 'tab/plan',
           component: UserPlan
         },
