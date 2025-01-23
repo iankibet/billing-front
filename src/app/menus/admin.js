@@ -22,6 +22,12 @@ menus = menus.concat( [
         type:'single',
       },
       {
+        path: '/billing/payments',
+        label: 'All Payments',
+        permission: 'payments',
+        type:'single',
+      },
+      {
         path: '/billing/plans',
         label: 'Plans',
         permission: 'plans',

@@ -17,6 +17,7 @@ import PlanBillsList from '@/views/core/clients-billing/plan/tabs/PlanBillsList.
 import PlanMain from '@/views/core/clients-billing/plan/PlanMain.vue'
 import UserPlan from '@/views/core/clients-billing/plan/tabs/UserPlan.vue'
 import PaymentDetails from '@/views/core/clients-billing/plan/tabs/PaymentDetails.vue'
+import PaymentsList from '@/views/core/billing/payments/PaymentsList.vue'
 
 let routes = []
 routes = routes.concat(
@@ -46,6 +47,10 @@ routes = routes.concat(
         {
           path:'plans',
           component: PlansList,
+        },
+        {
+          path:'payments',
+          component: PaymentsList,
         },
         {
           path:'features',
