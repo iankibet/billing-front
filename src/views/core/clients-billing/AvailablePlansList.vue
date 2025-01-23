@@ -5,11 +5,23 @@ import SkeletonFull from '@/views/layouts/skeletons/SkeletonFull.vue'
 import { shRepo } from '@iankibetsh/shframework'
 import { useRouter } from 'vue-router'
 const {getActionUrl, service, loading,props} = useStreamline('clientBilling/billing')
+const { props:userPlanProps} = useStreamline('clientBilling/userPlan')
+
 const plans = ref({});
 const router = useRouter();
+const userPlan = ref(null);
+const localProps  = defineProps(['activePlan'])
 watch(()=>props.plans, ()=>{
   if(props.plans){
     plans.value = props.plans
+  }
+})
+
+
+
+watch(()=>userPlanProps.userPlan, ()=>{
+  if(userPlanProps.userPlan){
+    userPlan.value = userPlanProps.userPlan
   }
 })
 
@@ -42,7 +54,8 @@ const createUserPlan = (planId) => {
               <p v-if="plan.annual_discount > 0" class="mb-1 text-warning">
                 <i class="bi-tags"></i> Annual Discount {{ plan.annual_discount}}<span v-if="plan.annual_discount_type=='percentage'">%</span>
               </p>
-              <button class="btn btn-sm btn-primary" @click="createUserPlan(plan.id)"> Get Started</button>
+              <button class="btn btn-secondary disabled btn-sm" v-if="userPlan.plan.id === plan.id"> Active Plan</button>
+              <button class="btn btn-sm btn-primary" v-else @click="createUserPlan(plan.id)"> Get Started</button>
             </div>
              <hr>
              <ul>

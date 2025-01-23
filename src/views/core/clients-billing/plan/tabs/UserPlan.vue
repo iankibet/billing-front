@@ -11,7 +11,11 @@ const userPlan = myProps.sharedData.userPlan
    <div >
 
      <p class="mb-0">Status: {{userPlan.status}} </p>
-     <h5> {{ userPlan.plan.name}} </h5>
+    <div class="d-flex gap-3">
+      <h5> {{ userPlan.plan.name}} </h5>
+      <router-link to="/available-plans" class="btn btn-warning btn-sm"><i class="bi bi-chevron-double-up"></i> Upgrade</router-link>
+    </div>
+
      <p>{{ userPlan.plan.description }}</p>
     <div class="d-flex gap-3 ">
       <p> ${{userPlan.amount }}/<small>month</small></p>

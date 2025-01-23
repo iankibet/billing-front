@@ -5,7 +5,7 @@ import SkeletonFull from '@/views/layouts/skeletons/SkeletonFull.vue'
 import {ShTabs} from '@iankibetsh/shframework'
 import AvailablePlansList from '@/views/core/clients-billing/AvailablePlansList.vue'
 
-const {getActionUrl, loading, props} = useStreamline('clientBilling/userPlan')
+const {loading, props} = useStreamline('clientBilling/userPlan')
 
 
 const userPlan = ref(null)
@@ -21,9 +21,8 @@ watch(()=>props.userPlan, ()=>{
   <SkeletonFull v-if="loading" />
   <div v-if="userPlan">
 
-    <div class="d-flex gap-2 align-items-center">
+    <div class="">
       <h5> {{ userPlan.plan.name}} </h5>
-      <router-link to="/available-plans" class="btn btn-warning btn-sm"><i class="bi bi-chevron-double-up"></i> Upgrade</router-link>
     </div>
     <sh-tabs
       base-url="/my-plan"
@@ -31,7 +30,7 @@ watch(()=>props.userPlan, ()=>{
       :shared-data="{userPlan}"
     />
   </div>
-  <AvailablePlansList v-else />
+  <AvailablePlansList  v-else />
 
 
 </template>
