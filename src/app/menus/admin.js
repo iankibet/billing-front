@@ -1,6 +1,4 @@
-let menus = [];
-
-menus = menus.concat( [
+export default [
   {
     path: '/dashboard',
     label: 'Dashboard',
@@ -60,10 +58,5 @@ menus = menus.concat( [
     icon: 'bi-key',
     permission: 'departments',
     type: 'single',
-  },
-
-])
-
-
-
-export default menus;
+  }
+]
