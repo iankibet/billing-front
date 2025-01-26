@@ -122,13 +122,12 @@ const fields = [
 
         :actions="{
          label: '&nbsp;',
-         type: 'dropdown-horizontal',
          icon: 'bi bi-three-dots',
          actions:[
                   {
                       label: 'View',
                       icon: 'bi bi-eye',
-                      path: '/billing/plans/view/{id}'
+                      path: '/billing/plans/plam/{id}'
                   },
                   {
                       label: 'Edit',
